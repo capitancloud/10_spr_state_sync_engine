@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Zap, RefreshCw, Sparkles } from 'lucide-react';
 import { SyncStatus } from '@/types/state';
 import { cn } from '@/lib/utils';
+import { ThemeToggle } from './ThemeToggle';
 
 interface HeaderProps {
   syncStatus: SyncStatus;
@@ -13,8 +14,18 @@ export const Header = ({ syncStatus }: HeaderProps) => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="text-center mb-12"
+      className="text-center mb-12 relative"
     >
+      {/* Theme Toggle in angolo */}
+      <motion.div 
+        className="absolute top-0 right-0"
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.8 }}
+      >
+        <ThemeToggle />
+      </motion.div>
+
       {/* Logo animato con effetti */}
       <motion.div className="relative inline-block mb-8">
         {/* Glow effect */}
