@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useOptimisticState } from '@/hooks/useOptimisticState';
 import { Header } from '@/components/state-sync/Header';
 import { ExplanationCards } from '@/components/state-sync/ExplanationCards';
+import { FlowDiagram } from '@/components/state-sync/FlowDiagram';
 import { TaskInput } from '@/components/state-sync/TaskInput';
 import { TaskList } from '@/components/state-sync/TaskList';
 import { OperationLogs } from '@/components/state-sync/OperationLogs';
@@ -60,6 +61,8 @@ const Index = () => {
         <Header syncStatus={syncStatus} />
         
         <ExplanationCards />
+
+        <FlowDiagram />
 
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Colonna sinistra: Task Manager */}
