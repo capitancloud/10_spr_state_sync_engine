@@ -22,9 +22,10 @@ import { Task, PendingOperation, OperationLog, SyncStatus } from '@/types/state'
  */
 
 // Simula una chiamata API con ritardo e possibilità di errore
+// Delay aumentato per rendere visibili le animazioni educative
 const simulateBackendCall = async (
   shouldFail: boolean = false,
-  delay: number = 1500
+  delay: number = 2500 // Delay più lungo per vedere meglio le animazioni
 ): Promise<boolean> => {
   await new Promise(resolve => setTimeout(resolve, delay));
   if (shouldFail) {
@@ -104,6 +105,9 @@ export const useOptimisticState = () => {
     };
     setPendingOperations(prev => [...prev, operation]);
 
+    // Piccolo delay per rendere visibile la separazione tra i log
+    await new Promise(resolve => setTimeout(resolve, 800));
+
     // STEP 2: Inviamo la richiesta al "backend"
     addLog('backend', 'Sincronizzazione con il backend...', 
       'Mentre l\'utente vede già la task, stiamo salvando sul server');
@@ -126,6 +130,9 @@ export const useOptimisticState = () => {
       // STEP 3 (alternativo): Errore! Dobbiamo fare rollback
       addLog('error', `Errore nel salvare "${text}"`, 
         'Il server ha rifiutato l\'operazione');
+      
+      // Delay per vedere l'errore prima del rollback
+      await new Promise(resolve => setTimeout(resolve, 800));
       
       // ROLLBACK: Rimuoviamo la task che avevamo aggiunto ottimisticamente
       addLog('rollback', `Rollback: rimossa "${text}"`, 
@@ -170,6 +177,9 @@ export const useOptimisticState = () => {
     };
     setPendingOperations(prev => [...prev, operation]);
 
+    // Piccolo delay per rendere visibile la separazione tra i log
+    await new Promise(resolve => setTimeout(resolve, 800));
+
     addLog('backend', 'Sincronizzazione con il backend...');
 
     try {
@@ -183,6 +193,10 @@ export const useOptimisticState = () => {
 
     } catch (error) {
       addLog('error', 'Impossibile aggiornare la task');
+      
+      // Delay per vedere l'errore prima del rollback
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
       addLog('rollback', `Rollback: ripristinato stato precedente`,
         'La task torna allo stato originale');
       
@@ -220,6 +234,9 @@ export const useOptimisticState = () => {
     };
     setPendingOperations(prev => [...prev, operation]);
 
+    // Piccolo delay per rendere visibile la separazione tra i log
+    await new Promise(resolve => setTimeout(resolve, 800));
+
     addLog('backend', 'Eliminazione in corso sul server...');
 
     try {
@@ -233,6 +250,10 @@ export const useOptimisticState = () => {
 
     } catch (error) {
       addLog('error', 'Impossibile eliminare la task');
+      
+      // Delay per vedere l'errore prima del rollback
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
       addLog('rollback', `Rollback: "${currentTask.text}" ripristinata`);
       
       // Rollback: riaggiungiamo la task
