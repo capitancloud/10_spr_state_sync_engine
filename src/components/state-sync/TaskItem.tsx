@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Trash2, Clock } from 'lucide-react';
+import { Check, Trash2, Clock, Sparkles } from 'lucide-react';
 import { Task, PendingOperation } from '@/types/state';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -13,62 +13,73 @@ interface TaskItemProps {
 }
 
 export const TaskItem = ({ task, pendingOperations, onToggle, onDelete }: TaskItemProps) => {
-  // Controlla se questa task ha un'operazione in attesa
   const isPending = pendingOperations.some(op => op.taskId === task.id);
 
   return (
     <motion.div
       layout
-      initial={{ opacity: 0, x: -20, scale: 0.95 }}
+      initial={{ opacity: 0, x: -30, scale: 0.9 }}
       animate={{ opacity: 1, x: 0, scale: 1 }}
-      exit={{ opacity: 0, x: 20, scale: 0.95 }}
-      transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+      exit={{ opacity: 0, x: 30, scale: 0.9 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
       className={cn(
-        "group relative flex items-center gap-4 p-4 rounded-xl glass transition-all",
-        "hover:shadow-md",
-        isPending && "ring-2 ring-warning/50 animate-pulse-soft"
+        "group relative flex items-center gap-4 p-4 rounded-xl transition-all duration-300",
+        "bg-card/80 backdrop-blur-xl border border-border/50",
+        "hover:shadow-lg hover:border-primary/30",
+        isPending && "ring-2 ring-warning/50"
       )}
     >
-      {/* Indicatore operazione in attesa */}
+      {/* Pending indicator con animazione migliorata */}
       <AnimatePresence>
         {isPending && (
           <motion.div
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0 }}
-            className="absolute -top-2 -right-2 flex items-center gap-1 px-2 py-1 bg-warning text-warning-foreground text-xs font-medium rounded-full"
+            initial={{ opacity: 0, scale: 0, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0, y: -10 }}
+            className="absolute -top-2 -right-2 flex items-center gap-1 px-2.5 py-1 bg-gradient-to-r from-warning to-orange-400 text-white text-xs font-semibold rounded-full shadow-lg"
           >
-            <Clock className="w-3 h-3 animate-spin-slow" />
-            In attesa
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+            >
+              <Clock className="w-3 h-3" />
+            </motion.div>
+            Syncing...
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Checkbox */}
-      <div className="flex-shrink-0">
+      {/* Checkbox con animazione */}
+      <motion.div 
+        className="flex-shrink-0"
+        whileTap={{ scale: 0.9 }}
+      >
         <Checkbox
           checked={task.completed}
           onCheckedChange={() => onToggle(task.id)}
           className={cn(
-            "w-6 h-6 rounded-lg border-2 transition-all",
+            "w-6 h-6 rounded-lg border-2 transition-all duration-300",
             task.completed 
-              ? "bg-success border-success" 
-              : "border-border hover:border-primary"
+              ? "bg-gradient-to-br from-success to-emerald-400 border-success shadow-md" 
+              : "border-border hover:border-primary hover:shadow-md"
           )}
         />
-      </div>
+      </motion.div>
 
-      {/* Testo task */}
+      {/* Testo task con animazione */}
       <div className="flex-1 min-w-0">
         <motion.span
+          animate={{ 
+            opacity: task.completed ? 0.6 : 1,
+          }}
           className={cn(
-            "block text-base transition-all",
+            "block text-base font-medium transition-all duration-300",
             task.completed && "line-through text-muted-foreground"
           )}
         >
           {task.text}
         </motion.span>
-        <span className="text-xs text-muted-foreground">
+        <span className="text-xs text-muted-foreground font-mono">
           ID: {task.id}
         </span>
       </div>
@@ -77,26 +88,33 @@ export const TaskItem = ({ task, pendingOperations, onToggle, onDelete }: TaskIt
       <AnimatePresence>
         {task.completed && (
           <motion.div
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0 }}
-            className="flex items-center gap-1 px-2 py-1 bg-success/20 text-success rounded-full text-xs font-medium"
+            initial={{ opacity: 0, scale: 0, rotate: -180 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            exit={{ opacity: 0, scale: 0, rotate: 180 }}
+            transition={{ type: 'spring', stiffness: 300 }}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-success/20 to-emerald-500/20 text-success rounded-full text-xs font-semibold border border-success/30"
           >
-            <Check className="w-3 h-3" />
+            <Sparkles className="w-3 h-3" />
             Fatto
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* Pulsante elimina */}
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={() => onDelete(task.id)}
-        className="opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:text-destructive hover:bg-destructive/10"
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileHover={{ scale: 1.1 }}
+        className="opacity-0 group-hover:opacity-100 transition-opacity duration-200"
       >
-        <Trash2 className="w-4 h-4" />
-      </Button>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => onDelete(task.id)}
+          className="text-destructive hover:text-destructive hover:bg-destructive/10 rounded-lg"
+        >
+          <Trash2 className="w-4 h-4" />
+        </Button>
+      </motion.div>
     </motion.div>
   );
 };
