@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useOptimisticState } from '@/hooks/useOptimisticState';
 import { Header } from '@/components/state-sync/Header';
 import { BeginnerIntro } from '@/components/state-sync/BeginnerIntro';
+import { ApproachComparison } from '@/components/state-sync/ApproachComparison';
 import { Glossary } from '@/components/state-sync/Glossary';
 import { ExplanationCards } from '@/components/state-sync/ExplanationCards';
 import { FlowDiagram } from '@/components/state-sync/FlowDiagram';
@@ -63,6 +64,8 @@ const Index = () => {
         <Header syncStatus={syncStatus} />
         
         <BeginnerIntro />
+        
+        <ApproachComparison />
         
         <Glossary />
         
