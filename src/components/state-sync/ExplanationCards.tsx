@@ -15,21 +15,30 @@ import { cn } from '@/lib/utils';
 const cards = [
   {
     icon: Zap,
-    title: 'Optimistic Update',
-    description: 'L\'UI si aggiorna subito, prima che il server risponda. L\'utente vede immediatamente il risultato della sua azione.',
+    title: 'STEP 1: Optimistic Update',
+    subtitle: 'Aggiornamento immediato',
+    description: 'Appena clicchi, l\'app mostra SUBITO il risultato. Non devi aspettare! È come quando ordini una pizza e il cameriere ti dice subito "Arriva!", senza andare prima in cucina.',
+    whatHappens: 'L\'interfaccia cambia istantaneamente',
     gradient: 'from-primary to-purple-500',
+    emoji: '⚡'
   },
   {
     icon: RefreshCw,
-    title: 'Sincronizzazione',
-    description: 'Mentre l\'utente vede già il cambiamento, in background sincronizziamo con il server per salvare i dati.',
+    title: 'STEP 2: Sincronizzazione',
+    subtitle: 'Salvataggio in background',
+    description: 'Mentre tu vedi già il risultato, in background l\'app sta "chiamando" il server per salvare davvero i dati. Tu non te ne accorgi nemmeno!',
+    whatHappens: 'I dati vengono inviati al server',
     gradient: 'from-accent to-emerald-400',
+    emoji: '🔄'
   },
   {
     icon: RotateCcw,
-    title: 'Rollback su Errore',
-    description: 'Se il server fallisce, ripristiniamo automaticamente lo stato precedente. L\'utente viene informato dell\'errore.',
+    title: 'STEP 3: Conferma o Rollback',
+    subtitle: 'Gestione del risultato',
+    description: 'Se il server conferma: tutto ok! Se invece c\'è un errore (es. internet assente), l\'app torna automaticamente allo stato precedente e ti avvisa.',
+    whatHappens: 'Successo → mantieni le modifiche | Errore → torna indietro',
     gradient: 'from-warning to-orange-400',
+    emoji: '↩️'
   },
 ];
 
@@ -167,22 +176,40 @@ export const ExplanationCards = () => {
                 </motion.div>
               )}
 
+              {/* Emoji grande */}
+              <motion.div 
+                className="text-4xl mb-3"
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                {card.emoji}
+              </motion.div>
+
               {/* Icona */}
               <motion.div 
                 className={cn(
-                  "w-16 h-16 rounded-xl flex items-center justify-center mb-4 shadow-lg",
+                  "w-12 h-12 rounded-xl flex items-center justify-center mb-3 shadow-lg",
                   `bg-gradient-to-br ${card.gradient}`
                 )}
                 whileHover={{ scale: 1.05, rotate: 5 }}
               >
-                <card.icon className="w-8 h-8 text-white" />
+                <card.icon className="w-6 h-6 text-white" />
               </motion.div>
 
               {/* Contenuto */}
-              <h3 className="text-lg font-bold mb-2">{card.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <h3 className="text-base font-bold mb-1">{card.title}</h3>
+              <p className="text-xs text-primary/80 font-medium mb-2">{card.subtitle}</p>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-3">
                 {card.description}
               </p>
+              
+              {/* Cosa succede */}
+              <div className="p-2 rounded-lg bg-muted/50 border border-border/30">
+                <p className="text-xs">
+                  <span className="font-semibold">👁️ Cosa vedi: </span>
+                  <span className="text-muted-foreground">{card.whatHappens}</span>
+                </p>
+              </div>
             </div>
           </motion.div>
         ))}
