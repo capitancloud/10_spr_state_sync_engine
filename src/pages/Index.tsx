@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { useOptimisticState } from '@/hooks/useOptimisticState';
 import { Header } from '@/components/state-sync/Header';
+import { BeginnerIntro } from '@/components/state-sync/BeginnerIntro';
+import { Glossary } from '@/components/state-sync/Glossary';
 import { ExplanationCards } from '@/components/state-sync/ExplanationCards';
 import { FlowDiagram } from '@/components/state-sync/FlowDiagram';
 import { TaskInput } from '@/components/state-sync/TaskInput';
@@ -59,6 +61,10 @@ const Index = () => {
 
       <div className="relative z-10 container mx-auto px-4 py-8 max-w-7xl">
         <Header syncStatus={syncStatus} />
+        
+        <BeginnerIntro />
+        
+        <Glossary />
         
         <ExplanationCards />
 
