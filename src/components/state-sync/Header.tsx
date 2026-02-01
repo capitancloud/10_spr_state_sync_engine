@@ -3,6 +3,7 @@ import { Zap, RefreshCw, Sparkles } from 'lucide-react';
 import { SyncStatus } from '@/types/state';
 import { cn } from '@/lib/utils';
 import { ThemeToggle } from './ThemeToggle';
+import { LogoutButton } from './LogoutButton';
 
 interface HeaderProps {
   syncStatus: SyncStatus;
@@ -16,14 +17,15 @@ export const Header = ({ syncStatus }: HeaderProps) => {
       transition={{ duration: 0.6 }}
       className="text-center mb-12 relative"
     >
-      {/* Theme Toggle in angolo */}
+      {/* Theme Toggle e Logout in angolo */}
       <motion.div 
-        className="absolute top-0 right-0"
+        className="absolute top-0 right-0 flex items-center gap-2"
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.8 }}
       >
         <ThemeToggle />
+        <LogoutButton />
       </motion.div>
 
       {/* Logo animato con effetti */}
