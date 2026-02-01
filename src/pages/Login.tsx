@@ -99,24 +99,6 @@ const Login = () => {
             </p>
           </motion.div>
 
-          {/* Info Box */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            className="mb-6 p-4 rounded-xl bg-primary/5 border border-primary/20"
-          >
-            <div className="flex items-start gap-3">
-              <KeyRound className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-              <div className="text-sm">
-                <p className="font-medium text-foreground mb-1">Accesso Protetto</p>
-                <p className="text-muted-foreground text-xs leading-relaxed">
-                  Questa applicazione educativa è protetta da un codice di accesso. 
-                  Il codice viene verificato in modo sicuro utilizzando una funzione di hash crittografica.
-                </p>
-              </div>
-            </div>
-          </motion.div>
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -197,15 +179,6 @@ const Login = () => {
             </motion.div>
           </form>
 
-          {/* Security Note */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-            className="mt-6 text-center text-xs text-muted-foreground"
-          >
-            🔒 Il codice viene verificato localmente tramite hash SHA-256
-          </motion.p>
         </div>
       </motion.div>
     </div>
