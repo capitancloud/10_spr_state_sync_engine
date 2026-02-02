@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Lock, Eye, EyeOff, AlertCircle, Loader2, KeyRound, Shield } from 'lucide-react';
+import { Lock, Eye, EyeOff, AlertCircle, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/contexts/AuthContext';
+import superProgrammatoreLogo from '@/assets/super-programmatore-logo.png';
 
 const Login = () => {
   const [code, setCode] = useState('');
@@ -74,19 +75,13 @@ const Login = () => {
             {/* Logo */}
             <motion.div 
               className="relative inline-block mb-6"
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.02 }}
             >
-              <motion.div 
-                className="absolute inset-0 rounded-2xl bg-primary/30 blur-xl"
-                animate={{ 
-                  scale: [1, 1.2, 1],
-                  opacity: [0.5, 0.8, 0.5]
-                }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+              <img 
+                src={superProgrammatoreLogo} 
+                alt="Super Programmatore" 
+                className="w-48 h-auto object-contain"
               />
-              <div className="relative inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-primary via-purple-500 to-accent shadow-xl">
-                <Shield className="w-10 h-10 text-white" />
-              </div>
             </motion.div>
 
             <h1 className="text-2xl font-bold mb-2">
